@@ -1,7 +1,10 @@
 package com.lti.wishlistservice.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +20,25 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lti.wishlistservice.model.Wishlist;
 import com.lti.wishlistservice.service.WishlistService;
 
+
 @RestController
 @RequestMapping("/wishlist")
 public class WishlistController {
 
+	private static final Logger logger = LoggerFactory.getLogger("WishlistController.class");
+	
 	@Autowired
 	private WishlistService wishlistService;
-	
 
-	@GetMapping("{id}")
-	public ResponseEntity<Wishlist> getWishlistById(@PathVariable(value="id") Long wishlist_id) {
-		return ResponseEntity.ok(wishlistService.getWishlistById(wishlist_id));
+	@PostMapping
+	public ResponseEntity<Wishlist> addWishlist(@RequestBody Wishlist wishlist) {
+		return new ResponseEntity<>(wishlistService.saveWishlist(wishlist), HttpStatus.CREATED);
+	}
+	
+	@GetMapping("{uuid}")
+	public ResponseEntity<Optional<Wishlist>> getWishlist(@PathVariable(value="uuid") String wishlistUuid) {
+		Optional<Wishlist> response = wishlistService.getWishlistByUuid(wishlistUuid);
+		return ResponseEntity.ok(response);
 	}  
 	
 	@GetMapping
@@ -35,19 +46,14 @@ public class WishlistController {
 		return ResponseEntity.ok(wishlistService.getAllWishlist());
 	}
 
-	@PostMapping
-	public ResponseEntity<Wishlist> saveWishlist(@RequestBody Wishlist wishlist) {
-		return new ResponseEntity<>(wishlistService.saveWishlist(wishlist), HttpStatus.CREATED);
+	@PutMapping("{uuid}")
+	public ResponseEntity<Wishlist> updateWishlist(@PathVariable(value="uuid") String wishlistUuid, @RequestBody Wishlist wishlist) {
+		return new ResponseEntity<>(wishlistService.updateWishlist(wishlist,wishlistUuid),HttpStatus.OK);
 	}
 
-	@PutMapping("{id}")
-	public ResponseEntity<Wishlist> updateWishlist(@PathVariable(value="id") Long wishlist_id, @RequestBody Wishlist wishlist) {
-		return new ResponseEntity<>(wishlistService.updateWishlist(wishlist,wishlist_id),HttpStatus.OK);
-	}
-
-	@DeleteMapping("{id}")
-	public ResponseEntity<String> deleteWishlistById(@PathVariable(value="id") Long wishlist_id) {
-		wishlistService.deleteWishlistById(wishlist_id);
+	@DeleteMapping("{uuid}")
+	public ResponseEntity<String> deleteWishlistById(@PathVariable(value="uuid") String wishlistUuid) {
+		wishlistService.deleteWishlist(wishlistUuid);
 		return new ResponseEntity<>("Wishlist deleted successfully !.",HttpStatus.OK);
 	}
 	

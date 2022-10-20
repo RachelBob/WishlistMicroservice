@@ -1,20 +1,21 @@
 package com.lti.wishlistservice.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.lti.wishlistservice.model.Wishlist;
 
 public interface WishlistService {
 	
-	public Wishlist getWishlistById(Long wishlist_id);
+	public Optional<Wishlist> getWishlistByUuid(String wishlist_uuid);
 	 
 	List<Wishlist> getAllWishlist();
 	
 	Wishlist saveWishlist(Wishlist wishlist);
 	
-	Wishlist updateWishlist(Wishlist wishlist, Long id);
+	Wishlist updateWishlist(Wishlist wishlist, String uuid);
 	
-	public void deleteWishlistById(Long wishlist_id);
+	public void deleteWishlist(String uuid);
 	
 
 }

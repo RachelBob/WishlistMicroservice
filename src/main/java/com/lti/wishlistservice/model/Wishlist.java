@@ -5,17 +5,21 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "wishlist")
@@ -27,6 +31,7 @@ public class Wishlist {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "wishlist_id")
 	private Long wishlist_id;
 	
 	private String name;
@@ -35,8 +40,19 @@ public class Wishlist {
 	@Column(name = "uuid")
 	private String uuid;
 
-	@OneToMany(targetEntity = WishlistProduct.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_wishlist_id", referencedColumnName = "wishlist_id")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="wishlist", cascade=CascadeType.ALL)
 	private List<WishlistProduct> wishlistProduct;
+	
+	
+	@JsonIgnore
+	public Long getWishlist_id() {
+		return wishlist_id;
+	}
+	
+	@JsonIgnore
+	public Long getCustomer_id() {
+		return customer_id;
+	}
+	
 
 }

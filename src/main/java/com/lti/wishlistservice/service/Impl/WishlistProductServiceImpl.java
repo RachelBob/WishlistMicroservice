@@ -22,17 +22,17 @@ public class WishlistProductServiceImpl implements WishlistProductService {
 
 	@Autowired
 	private WishlistRepository wishlistRepository;
-
+	
 	@Override
-	public Wishlist saveWishlistProduct(Wishlist wishlistProductReq) {
+	public Wishlist saveWishlistProduct(Wishlist wishlistReq) {
 		UUID uuid = Generators.timeBasedGenerator().generate();
-
-		for (WishlistProduct wishlistProd : wishlistProductReq.getWishlistProduct()) {
+		Optional<Wishlist> WishlistData = wishlistRepository.findByUuid(wishlistReq.getUuid());
+		for (WishlistProduct wishlistProd : wishlistReq.getWishlistProduct()) {
 			wishlistProd.setUuid(uuid.toString());
+			wishlistProd.setWishlist(WishlistData.get());
+			wishlistProductRepository.save(wishlistProd);
 		}
-		Optional<Wishlist> WishlistData = wishlistRepository.findByUuid(wishlistProductReq.getUuid());
-		WishlistData.get().setWishlistProduct(wishlistProductReq.getWishlistProduct());
-		return wishlistRepository.save(WishlistData.get());
+		return wishlistReq;
 	}
 
 	@Override

@@ -2,14 +2,24 @@ package com.lti.wishlistservice.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table
+@Data
+@NoArgsConstructor
+@AllArgsConstructor 
+@Builder
 public class WishlistProduct {
 
 	@Id
@@ -19,49 +29,8 @@ public class WishlistProduct {
 	private String description;
 	private BigDecimal price;
 	
-	public Long getWishlistproduct_id() {
-		return wishlistproduct_id;
-	}
-	public String getProductName() {
-		return productName;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public BigDecimal getPrice() {
-		return price;
-	}
-	public void setWishlistproduct_id(Long wishlistproduct_id) {
-		this.wishlistproduct_id = wishlistproduct_id;
-	}
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+	@Column(name="uuid")
+	private String uuid;
 	
-	
-	
-	public WishlistProduct() {
-		super();
-	}
-	
-	public WishlistProduct(Long wishlistproduct_id, String productName, String description, BigDecimal price) {
-		super();
-		this.wishlistproduct_id = wishlistproduct_id;
-		this.productName = productName;
-		this.description = description;
-		this.price = price;
-	}
-	@Override
-	public String toString() {
-		return "WishlistProduct [wishlistproduct_id=" + wishlistproduct_id + ", productName=" + productName
-				+ ", description=" + description + ", price=" + price + "]";
-	}
-
 	
 }

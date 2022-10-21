@@ -8,13 +8,13 @@ import com.lti.wishlistservice.model.WishlistProduct;
 
 public interface WishlistProductService {
 	
-	public Optional<WishlistProduct> getWishlistProductByUuid(String wishlist_uuid);
+	public Optional<Wishlist> getWishlistProductByUuid(String wishlist_uuid);
 	 
 	List<Wishlist> getAllWishlistProduct();
 	
 	Wishlist saveWishlistProduct(Wishlist wishlistProduct);
 	
-	Wishlist updateWishlistProduct(WishlistProduct wishlist, String uuid);
+	WishlistProduct updateWishlistProduct(WishlistProduct wishlist, String uuid);
 	
 	public void deleteWishlistProduct(String uuid);
 

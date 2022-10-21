@@ -1,5 +1,6 @@
 package com.lti.wishlistservice.service.Impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,23 +37,40 @@ public class WishlistProductServiceImpl implements WishlistProductService {
 	}
 
 	@Override
-	public Optional<WishlistProduct> getWishlistProductByUuid(String wishlist_uuid) {
-		return Optional.empty();
+	public Optional<Wishlist> getWishlistProductByUuid(String wishlist_uuid) {
+		return wishlistRepository.findByUuid(wishlist_uuid);
 	}
 
 	@Override
 	public List<Wishlist> getAllWishlistProduct() {
-		return null;
+		return wishlistRepository.findAll();
 	}
-
-	@Override
-	public Wishlist updateWishlistProduct(WishlistProduct wishlist, String uuid) {
-		return null;
-	}
-
+	
 	@Override
 	public void deleteWishlistProduct(String uuid) {
+		WishlistProduct uuId = wishlistProductRepository.findByUuid(uuid).get();
+		Long wishlistid = uuId.getWishlistproduct_id();
+		wishlistProductRepository.deleteById(wishlistid);
+	}
 
+	@Override
+	public WishlistProduct updateWishlistProduct(WishlistProduct wishlistReq, String uuid) {
+		
+		WishlistProduct prodListById = wishlistProductRepository.findByUuid(uuid).get();
+		
+		if(wishlistReq.getDescription() !=null) {
+			prodListById.setDescription(wishlistReq.getDescription());
+		}
+		
+		if(wishlistReq.getPrice() !=null) {
+			prodListById.setPrice(wishlistReq.getPrice());
+		}
+		
+		if(wishlistReq.getProductName() !=null) {
+			prodListById.setProductName(wishlistReq.getProductName());
+		}
+		
+		return wishlistProductRepository.save(prodListById);
 	}
 
 

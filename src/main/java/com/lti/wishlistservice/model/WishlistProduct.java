@@ -33,6 +33,7 @@ public class WishlistProduct {
 	private String productname;
 	private String description;
 	private BigDecimal price;
+	private String category;
 	
 	@Column(name="uuid")
 	private String uuid;

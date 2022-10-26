@@ -16,7 +16,7 @@ public class GlobalExceptionHandlerController {
 
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<String> noSuchElementException(NoSuchElementException noSuchElementEx){
-		return new ResponseEntity<String>("Something went wrong, Please try after spmetime.", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<String>("Data doesn't exist. Please try with available data", HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler()

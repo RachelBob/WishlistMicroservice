@@ -19,40 +19,38 @@ import com.lti.wishlistservice.model.Wishlist;
 import com.lti.wishlistservice.model.WishlistProduct;
 import com.lti.wishlistservice.service.WishlistProductService;
 
-
 @RestController
-@RequestMapping("/wishlistProduct")
+@RequestMapping("/wishlistproduct")
 public class WishlistProductController {
 
 	@Autowired
 	private WishlistProductService wishlistProductService;
 	
-	@PostMapping
+	@PostMapping("/add")
 	public ResponseEntity<Wishlist> addWishlistProduct(@RequestBody Wishlist wishlist) {
 		return new ResponseEntity<>(wishlistProductService.saveWishlistProduct(wishlist), HttpStatus.CREATED);
 	}
 	
-	
-	@GetMapping("{uuid}")
+	@GetMapping("/findbyuuid/{uuid}")
 	public ResponseEntity<Optional<Wishlist>> getWishlistProductByUuid(@PathVariable(value="uuid") String wishlistUuid) {
 		Optional<Wishlist> response = wishlistProductService.getWishlistProductByUuid(wishlistUuid);
 		return ResponseEntity.ok(response);
 	}  
 
-	@GetMapping
+	@GetMapping("/findall")
 	public ResponseEntity<List<Wishlist>> getAllWishlistProduct() {
 		return ResponseEntity.ok(wishlistProductService.getAllWishlistProduct());
 	}
 	
-	@PutMapping("{uuid}")
-	public ResponseEntity<WishlistProduct> updateWishlistProduct(@PathVariable(value="uuid") String wishlistUuid, @RequestBody WishlistProduct wishlist) {
-		return new ResponseEntity<>(wishlistProductService.updateWishlistProduct(wishlist,wishlistUuid),HttpStatus.OK);
+	@PutMapping("/update")
+	public ResponseEntity<WishlistProduct> updateWishlistProduct(@RequestBody WishlistProduct wishlist) {
+		return new ResponseEntity<>(wishlistProductService.updateWishlistProduct(wishlist),HttpStatus.OK);
 	}
 
-	@DeleteMapping("{uuid}")
-	public ResponseEntity<String> deleteWishlistProduct(@PathVariable(value="uuid") String wishlistUuid) {
-		wishlistProductService.deleteWishlistProduct(wishlistUuid);
-		return new ResponseEntity<>("Wishlist deleted successfully !.",HttpStatus.OK);
+	@DeleteMapping("/delete/{uuid}")
+	public ResponseEntity<String> deleteWishlistProduct(@PathVariable(value="uuid") String wishlistProductUuid) {
+		wishlistProductService.deleteWishlistProduct(wishlistProductUuid);
+		return new ResponseEntity<>("Wishlist Product deleted successfully !.",HttpStatus.OK);
 	}
 	
 }

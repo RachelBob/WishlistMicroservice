@@ -14,7 +14,7 @@ public interface WishlistProductService {
 	
 	Wishlist saveWishlistProduct(Wishlist wishlistProduct);
 	
-	WishlistProduct updateWishlistProduct(WishlistProduct wishlist, String uuid);
+	WishlistProduct updateWishlistProduct(WishlistProduct wishlist);
 	
 	public void deleteWishlistProduct(String uuid);
 

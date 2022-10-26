@@ -41,10 +41,10 @@ public class WishlistServiceImpl implements WishlistService {
 	}
 
 	@Override
-	public Wishlist updateWishlist(Wishlist wishlist, String uuid) {
-		Wishlist uuId = wishlistRepository.findByUuid(uuid).get();
-		uuId.setName(wishlist.getName());
-		return wishlistRepository.save(uuId);
+	public Wishlist updateWishlist(Wishlist wishlist) {
+		Wishlist wishlistObj = wishlistRepository.findByUuid(wishlist.getUuid()).get();
+		wishlistObj.setName(wishlist.getName());
+		return wishlistRepository.save(wishlistObj);
 	}
 	
 	@Override

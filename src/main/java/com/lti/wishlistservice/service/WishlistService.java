@@ -13,7 +13,7 @@ public interface WishlistService {
 	
 	Wishlist saveWishlist(Wishlist wishlist);
 	
-	Wishlist updateWishlist(Wishlist wishlist, String uuid);
+	Wishlist updateWishlist(Wishlist wishlist);
 	
 	public void deleteWishlist(String uuid);
 	

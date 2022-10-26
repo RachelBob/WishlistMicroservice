@@ -54,9 +54,9 @@ public class WishlistProductServiceImpl implements WishlistProductService {
 	}
 
 	@Override
-	public WishlistProduct updateWishlistProduct(WishlistProduct wishlistReq, String uuid) {
+	public WishlistProduct updateWishlistProduct(WishlistProduct wishlistReq) {
 		
-		WishlistProduct prodListById = wishlistProductRepository.findByUuid(uuid).get();
+		WishlistProduct prodListById = wishlistProductRepository.findByUuid(wishlistReq.getUuid()).get();
 		
 		if(wishlistReq.getDescription() !=null) {
 			prodListById.setDescription(wishlistReq.getDescription());

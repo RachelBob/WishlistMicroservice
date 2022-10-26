@@ -30,7 +30,7 @@ public class WishlistProduct {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long wishlistproduct_id;
-	private String productName;
+	private String productname;
 	private String description;
 	private BigDecimal price;
 	

@@ -66,8 +66,8 @@ public class WishlistProductServiceImpl implements WishlistProductService {
 			prodListById.setPrice(wishlistReq.getPrice());
 		}
 		
-		if(wishlistReq.getProductName() !=null) {
-			prodListById.setProductName(wishlistReq.getProductName());
+		if(wishlistReq.getProductname() !=null) {
+			prodListById.setProductname(wishlistReq.getProductname());
 		}
 		
 		return wishlistProductRepository.save(prodListById);

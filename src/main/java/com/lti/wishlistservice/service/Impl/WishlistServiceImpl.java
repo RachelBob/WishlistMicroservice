@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.uuid.Generators;
+import com.lti.wishlistservice.consumer.CustomerDetailsConsumer;
 import com.lti.wishlistservice.model.Wishlist;
 import com.lti.wishlistservice.repository.WishlistRepository;
 import com.lti.wishlistservice.service.WishlistService;
@@ -22,6 +25,9 @@ public class WishlistServiceImpl implements WishlistService {
 
 	@Autowired
 	private WishlistRepository wishlistRepository;
+	
+	@Autowired
+	private CustomerDetailsConsumer customerConsumer;
 
 	@Override
 	public Optional<Wishlist> getWishlistByUuid(String wishlist_uuid) {
@@ -35,8 +41,15 @@ public class WishlistServiceImpl implements WishlistService {
 
 	@Override
 	public Wishlist saveWishlist(Wishlist wishlist) {
-		UUID uuid = Generators.timeBasedGenerator().generate();
-		wishlist.setUuid(uuid.toString());
+		String custStrObj = customerConsumer.getCustomerByUUID(wishlist.getCustomer_uuid());
+		try {
+			JSONObject custJsonObj = new JSONObject(custStrObj);
+			UUID uuid = Generators.timeBasedGenerator().generate();
+			wishlist.setUuid(uuid.toString());
+			wishlist.setCustomer_id(Long.parseLong(custJsonObj.get("customerId").toString()));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		return wishlistRepository.save(wishlist);
 	}
 

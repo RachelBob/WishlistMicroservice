@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,6 +40,9 @@ public class Wishlist {
 
 	@Column(name = "uuid")
 	private String uuid;
+	
+	@Transient
+	private String customer_uuid;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="wishlist", cascade=CascadeType.ALL)
 	private List<WishlistProduct> wishlistProduct;

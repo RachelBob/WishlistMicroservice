@@ -67,5 +67,19 @@ public class WishlistServiceImpl implements WishlistService {
 		wishlistRepository.deleteById(wishlistid);
 	}
 	
+	@Override
+	public List<Wishlist> getAllWishlistByCustomerUuid(String customeruuid) {
+		String custStrObj = customerConsumer.getCustomerByUUID(customeruuid);
+		JSONObject custJsonObj;
+		List<Wishlist> wishlistResp = null;
+		try {
+			custJsonObj = new JSONObject(custStrObj);
+			wishlistResp = wishlistRepository.findByCustomer_id(Long.parseLong(custJsonObj.get("customerId").toString()));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return wishlistResp;
+	}
+	
 
 }

@@ -57,4 +57,10 @@ public class WishlistController {
 		return new ResponseEntity<>("Wishlist deleted successfully !.",HttpStatus.OK);
 	}
 	
+	@GetMapping("/findbycustomeruuid/{customeruuid}")
+	public ResponseEntity<List<Wishlist>> getWishlistByCustomer(@PathVariable(value="customeruuid") String customeruuid) {
+		List<Wishlist> response = wishlistService.getAllWishlistByCustomerUuid(customeruuid);
+		return ResponseEntity.ok(response);
+	}  
+	
 }

@@ -17,5 +17,7 @@ public interface WishlistService {
 	
 	public void deleteWishlist(String uuid);
 	
+	List<Wishlist> getAllWishlistByCustomerUuid(String customerUUID);
+	
 
 }
